@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
 
 class Display extends Component {
   render() {
     return (
-     <div class= 'display'>
+     <div className= 'display'>
+     <h1>{this.props.value}</h1>
      </div>
     );
   }

@@ -1,37 +1,53 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
-import logo from './logo.svg';
 import Button from './CalcButton.js';
 import Display from './Display.js';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-      	<Display />
-      	<Button buttonText= 'CE'/>
-      	<Button buttonText= 'C'/>
-        <Button buttonText= '<='/>
-      	<Button buttonText= '÷'/>
-      	<Button buttonText= {7}/>
-      	<Button buttonText= {8}/>
-      	<Button buttonText= {9}/>
-      	<Button buttonText= 'X'/>
-      	<Button buttonText= {4}/>
-      	<Button buttonText= {5}/>
-      	<Button buttonText= {6}/>
-      	<Button buttonText= '-'/>
-      	<Button buttonText= {1}/>
-      	<Button buttonText= {2}/>
-      	<Button buttonText= {3}/>
-      	<Button buttonText= '+'/>
-      	<Button buttonText= '+/-'/>
-      	<Button buttonText= {0}/>
-      	<Button buttonText= '.'/>
-      	<Button buttonText= '='/>
-      </div>
-    );
+	constructor(props) {
+    super(props)
+    this.state={value: 0}
+    this.updateDisplay = this.updateDisplay.bind(this)
+  	}
+  	updateDisplay(valueOfButton){
+  		this.setState({
+  			value: this.state.value+valueOfButton.toString()
+  		})
+  	}
+
+	renderButton(valueOfButton){
+		return (
+			<Button value={valueOfButton} 
+			updateDisplay= {this.updateDisplay}
+			/>
+		)
+	}
+	render() {
+   		return (
+   		  <div className="App">
+   		  	<Display value={this.state.value}/>
+   		  	{this.renderButton('CE')}
+   		  	{this.renderButton('C')}
+   		    {this.renderButton('<=')}
+   		  	{this.renderButton('÷')}
+   		  	{this.renderButton(7)}
+   		  	{this.renderButton(8)}
+   		  	{this.renderButton(9)}
+   		  	{this.renderButton('X')}
+   		  	{this.renderButton(4)}
+   		  	{this.renderButton(5)}
+   		  	{this.renderButton(6)}
+   		  	{this.renderButton('-')}
+   		  	{this.renderButton(1)}
+   		  	{this.renderButton(2)}
+   		  	{this.renderButton(3)}
+   		  	{this.renderButton('+')}
+   		  	{this.renderButton('+/-')}
+   		  	{this.renderButton(0)}
+   		  	{this.renderButton('.')}
+   		  	{this.renderButton('=')}
+   		  </div>
+   		);
   }
 }
 
