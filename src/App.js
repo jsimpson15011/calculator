@@ -80,6 +80,11 @@ class App extends Component {
   				})
   				return
   			}
+  			else{
+  				this.setState({
+  					displayedValue: this.state.displayedValue+valueOfButton.toString()
+  				})
+  			}
   		}
   		if (!this.state.operatorActive) {
   		if (this.state.displayedValue.length<16) {
