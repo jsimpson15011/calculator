@@ -24,10 +24,13 @@ class App extends Component {
   				})
   				return
   			}
-  			else{
+  			if(this.state.displayedValue!=='0'){
   				this.setState({
   					displayedValue: '-'+this.state.displayedValue
   				})
+  				return
+  			}
+  			else{
   				return
   			}
   		}
@@ -35,13 +38,26 @@ class App extends Component {
   			this.setState({
   				dotPressed: true
   			})
+  			if (this.state.displayedValue==='0') {
+  				this.setState({
+  					displayedValue: '0.'
+  				})
+  				return
+  			}
   		}
   		if (!this.state.operatorActive) {
   		if (this.state.displayedValue.length<16) {
-  			if (this.state.displayedValue==='0') {
-  				this.setState({
-  				displayedValue: valueOfButton.toString()
-  				})
+  			if (this.state.displayedValue==='0'||this.state.displayedValue==='-0') {
+  				if (this.state.displayedValue==='0') {
+  					this.setState({
+  					displayedValue: valueOfButton.toString()
+  					})
+  				}
+  				if (this.state.displayedValue==='-0') {
+  					this.setState({
+  					displayedValue: '-'+valueOfButton.toString()
+  					})
+  				}
   			}
   			else{
   				this.setState({
