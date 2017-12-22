@@ -4,7 +4,7 @@
   padding-top: 50px;
   margin-top: 50px;
   margin-left: 10%;
-  background-color: black;
+  background-color: grey;
 }
 
 .calcButton{
@@ -12,10 +12,15 @@
   font-size: 5vw;
   width: 25%;
   min-height: 44px;
-  background-color: black;
-  color: white;
+  color: black;
 }
 
+.red{
+  background-color: #5b0a26;
+}
+.blue{
+  background-color: #678ece;
+}
 .display{
   margin-left: 10%;
   background-color: white;

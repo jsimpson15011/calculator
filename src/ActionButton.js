@@ -4,7 +4,7 @@ class ActionButton extends Component {
   render() {
     return (
      <div>
-     <button className='calcButton' onClick=
+     <button className={'calcButton '+this.props.color} onClick=
 		{() =>{this.props.actionButton(this.props.value)}}>
       {this.props.value}
      </button>

@@ -106,10 +106,11 @@ class App extends Component {
 			/>
 		)
 	}
-	renderActionButton(valueOfButton){
+	renderActionButton(valueOfButton,color){
 		return (
 			<ActionButton value={valueOfButton}
 			actionButton= {this.actionButton} 
+			color= {color}
 			/>
 		)
 	}
@@ -117,22 +118,22 @@ class App extends Component {
    		return (
    		  <div className="App">
    		  	<Display value={this.state.displayedValue}/>
-   		  	{this.renderActionButton('CE')}
-   		  	{this.renderActionButton('C')}
-   		    {this.renderActionButton('<=')}
-   		  	{this.renderActionButton('÷')}
+   		  	{this.renderActionButton('CE','red')}
+   		  	{this.renderActionButton('C','red')}
+   		    {this.renderActionButton('<=','blue')}
+   		  	{this.renderActionButton('÷','blue')}
    		  	{this.renderNumberButton(7)}
    		  	{this.renderNumberButton(8)}
    		  	{this.renderNumberButton(9)}
-   		  	{this.renderActionButton('X')}
+   		  	{this.renderActionButton('X','blue')}
    		  	{this.renderNumberButton(4)}
    		  	{this.renderNumberButton(5)}
    		  	{this.renderNumberButton(6)}
-   		  	{this.renderActionButton('-')}
+   		  	{this.renderActionButton('-','blue')}
    		  	{this.renderNumberButton(1)}
    		  	{this.renderNumberButton(2)}
    		  	{this.renderNumberButton(3)}
-   		  	{this.renderActionButton('+')}
+   		  	{this.renderActionButton('+','blue')}
    		  	{this.renderNumberButton('+/-')}
    		  	{this.renderNumberButton(0)}
    		  	{this.renderNumberButton('.')}
