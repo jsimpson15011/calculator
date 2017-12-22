@@ -1,51 +1,94 @@
 import React, { Component } from 'react';
-import Button from './CalcButton.js';
+import NumberButton from './NumberButton.js';
 import Display from './Display.js';
 import './App.css';
-
 class App extends Component {
 	constructor(props) {
     super(props)
-    this.state={value: 0}
+    this.state={
+    	displayedValue: '0',
+    	dotPressed: false,
+    	operatorActive: false
+    	}
     this.updateDisplay = this.updateDisplay.bind(this)
   	}
   	updateDisplay(valueOfButton){
-  		this.setState({
-  			value: this.state.value+valueOfButton.toString()
-  		})
+  		var cannotAddDot= this.state.dotPressed && valueOfButton==='.'
+  		if (cannotAddDot) {
+  			return
+  		}
+  		if (valueOfButton==='+/-') {
+  			if (this.state.displayedValue.toString().includes('-')) {
+  				this.setState({
+  					displayedValue: this.state.displayedValue.replace('-','')
+  				})
+  				return
+  			}
+  			else{
+  				this.setState({
+  					displayedValue: '-'+this.state.displayedValue
+  				})
+  				return
+  			}
+  		}
+  		if (valueOfButton==='.') {
+  			this.setState({
+  				dotPressed: true
+  			})
+  		}
+  		if (!this.state.operatorActive) {
+  		if (this.state.displayedValue.length<16) {
+  			if (this.state.displayedValue==='0') {
+  				this.setState({
+  				displayedValue: valueOfButton.toString()
+  				})
+  			}
+  			else{
+  				this.setState({
+  				displayedValue: this.state.displayedValue+valueOfButton.toString()
+  				})
+  			}
+  		}
+  		}
   	}
 
-	renderButton(valueOfButton){
+	renderNumberButton(valueOfButton){
 		return (
-			<Button value={valueOfButton} 
+			<NumberButton value={valueOfButton} 
 			updateDisplay= {this.updateDisplay}
+			/>
+		)
+	}
+	renderActionButton(valueOfButton){
+		return (
+			<NumberButton value={valueOfButton} 
 			/>
 		)
 	}
 	render() {
    		return (
    		  <div className="App">
-   		  	<Display value={this.state.value}/>
-   		  	{this.renderButton('CE')}
-   		  	{this.renderButton('C')}
-   		    {this.renderButton('<=')}
-   		  	{this.renderButton('÷')}
-   		  	{this.renderButton(7)}
-   		  	{this.renderButton(8)}
-   		  	{this.renderButton(9)}
-   		  	{this.renderButton('X')}
-   		  	{this.renderButton(4)}
-   		  	{this.renderButton(5)}
-   		  	{this.renderButton(6)}
-   		  	{this.renderButton('-')}
-   		  	{this.renderButton(1)}
-   		  	{this.renderButton(2)}
-   		  	{this.renderButton(3)}
-   		  	{this.renderButton('+')}
-   		  	{this.renderButton('+/-')}
-   		  	{this.renderButton(0)}
-   		  	{this.renderButton('.')}
-   		  	{this.renderButton('=')}
+   		  	<Display value={this.state.displayedValue}/>
+   		  	{this.renderActionButton('CE')}
+   		  	{this.renderActionButton('C')}
+   		    {this.renderActionButton('<=')}
+   		  	{this.renderActionButton('÷')}
+   		  	{this.renderNumberButton(7)}
+   		  	{this.renderNumberButton(8)}
+   		  	{this.renderNumberButton(9)}
+   		  	{this.renderActionButton('X')}
+   		  	{this.renderNumberButton(4)}
+   		  	{this.renderNumberButton(5)}
+   		  	{this.renderNumberButton(6)}
+   		  	{this.renderActionButton('-')}
+   		  	{this.renderNumberButton(1)}
+   		  	{this.renderNumberButton(2)}
+   		  	{this.renderNumberButton(3)}
+   		  	{this.renderActionButton('+')}
+   		  	{this.renderNumberButton('+/-')}
+   		  	{this.renderNumberButton(0)}
+   		  	{this.renderNumberButton('.')}
+   		  	{this.renderActionButton('=')}
    		  </div>
    		);
   }
