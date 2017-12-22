@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NumberButton from './NumberButton.js';
+import ActionButton from './ActionButton.js';
 import Display from './Display.js';
 import './App.css';
 class App extends Component {
@@ -7,16 +8,48 @@ class App extends Component {
     super(props)
     this.state={
     	displayedValue: '0',
+    	storedValue: undefined,
     	dotPressed: false,
     	operatorActive: false
     	}
     this.updateDisplay = this.updateDisplay.bind(this)
+    this.actionButton = this.actionButton.bind(this)
+  	}
+  	actionButton(valueOfButton){
+  		if (valueOfButton==='CE') {
+  			this.setState({
+  				storedValue: undefined,
+  				displayedValue: '0',
+  				dotPressed: false
+  			})
+  		}
+  		if (valueOfButton==='C') {
+  			this.setState({
+  				displayedValue: '0',
+  				dotPressed: false
+  			})
+  		}
+  		if (valueOfButton==='<=') {
+  			var lastDigitInDisplay= this.state.displayedValue.slice(-1)
+  			var lengthOfDisplay= this.state.displayedValue.replace('-','').length
+  			console.log(lengthOfDisplay)
+  			if (lengthOfDisplay===1) {
+  				this.setState({
+  					displayedValue: '0'
+  				})
+  				return
+  			}
+  			this.setState({
+  				displayedValue: this.state.displayedValue.replace(/.$/,'')
+  			})
+  			if (lastDigitInDisplay==='.') {
+  				this.setState({
+  					dotPressed: false
+  				})
+  			}
+  		}
   	}
   	updateDisplay(valueOfButton){
-  		var cannotAddDot= this.state.dotPressed && valueOfButton==='.'
-  		if (cannotAddDot) {
-  			return
-  		}
   		if (valueOfButton==='+/-') {
   			if (this.state.displayedValue.toString().includes('-')) {
   				this.setState({
@@ -24,7 +57,7 @@ class App extends Component {
   				})
   				return
   			}
-  			if(this.state.displayedValue!=='0'){
+  			if(this.state.displayedValue!=='0'&&this.state.displayedValue!=='0.'){
   				this.setState({
   					displayedValue: '-'+this.state.displayedValue
   				})
@@ -35,6 +68,9 @@ class App extends Component {
   			}
   		}
   		if (valueOfButton==='.') {
+  			if (this.state.dotPressed) {
+  				return
+  			}
   			this.setState({
   				dotPressed: true
   			})
@@ -47,15 +83,10 @@ class App extends Component {
   		}
   		if (!this.state.operatorActive) {
   		if (this.state.displayedValue.length<16) {
-  			if (this.state.displayedValue==='0'||this.state.displayedValue==='-0') {
+  			if (this.state.displayedValue==='0') {
   				if (this.state.displayedValue==='0') {
   					this.setState({
   					displayedValue: valueOfButton.toString()
-  					})
-  				}
-  				if (this.state.displayedValue==='-0') {
-  					this.setState({
-  					displayedValue: '-'+valueOfButton.toString()
   					})
   				}
   			}
@@ -77,7 +108,8 @@ class App extends Component {
 	}
 	renderActionButton(valueOfButton){
 		return (
-			<NumberButton value={valueOfButton} 
+			<ActionButton value={valueOfButton}
+			actionButton= {this.actionButton} 
 			/>
 		)
 	}
