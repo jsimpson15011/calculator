@@ -16,23 +16,25 @@ class App extends Component {
     this.actionButton = this.actionButton.bind(this)
   	}
   	actionButton(valueOfButton){
-  		if (valueOfButton==='CE') {
+  		switch(valueOfButton){
+  			case 'CE':
   			this.setState({
   				storedValue: undefined,
   				displayedValue: '0',
   				dotPressed: false
   			})
-  		}
-  		if (valueOfButton==='C') {
+  			break;
+
+  			case 'C':
   			this.setState({
   				displayedValue: '0',
   				dotPressed: false
   			})
-  		}
-  		if (valueOfButton==='<=') {
+  			break;
+
+  			case '<=':
   			var lastDigitInDisplay= this.state.displayedValue.slice(-1)
   			var lengthOfDisplay= this.state.displayedValue.replace('-','').length
-  			console.log(lengthOfDisplay)
   			if (lengthOfDisplay===1) {
   				this.setState({
   					displayedValue: '0'
@@ -47,6 +49,10 @@ class App extends Component {
   					dotPressed: false
   				})
   			}
+  			break;
+  			
+  			default:
+  			return;
   		}
   	}
   	updateDisplay(valueOfButton){
