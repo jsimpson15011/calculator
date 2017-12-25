@@ -110,10 +110,11 @@ class App extends Component {
   		}
   	}
 
-	renderNumberButton(valueOfButton){
+	renderNumberButton(valueOfButton,color){
 		return (
 			<NumberButton value={valueOfButton} 
 			updateDisplay= {this.updateDisplay}
+      color= {color}
 			/>
 		)
 	}
@@ -129,26 +130,26 @@ class App extends Component {
    		return (
    		  <div className="App">
    		  	<Display value={this.state.displayedValue}/>
-   		  	{this.renderActionButton('CE','red')}
-   		  	{this.renderActionButton('C','red')}
+   		  	{this.renderActionButton('CE','green')}
+   		  	{this.renderActionButton('C','green')}
    		    {this.renderActionButton('<=','blue')}
    		  	{this.renderActionButton('÷','blue')}
-   		  	{this.renderNumberButton(7)}
-   		  	{this.renderNumberButton(8)}
-   		  	{this.renderNumberButton(9)}
+   		  	{this.renderNumberButton(7,'grey')}
+   		  	{this.renderNumberButton(8,'grey')}
+   		  	{this.renderNumberButton(9,'grey')}
    		  	{this.renderActionButton('X','blue')}
-   		  	{this.renderNumberButton(4)}
-   		  	{this.renderNumberButton(5)}
-   		  	{this.renderNumberButton(6)}
+   		  	{this.renderNumberButton(4,'grey')}
+   		  	{this.renderNumberButton(5,'grey')}
+   		  	{this.renderNumberButton(6,'grey')}
    		  	{this.renderActionButton('-','blue')}
-   		  	{this.renderNumberButton(1)}
-   		  	{this.renderNumberButton(2)}
-   		  	{this.renderNumberButton(3)}
+   		  	{this.renderNumberButton(1,'grey')}
+   		  	{this.renderNumberButton(2,'grey')}
+   		  	{this.renderNumberButton(3,'grey')}
    		  	{this.renderActionButton('+','blue')}
-   		  	{this.renderNumberButton('+/-')}
-   		  	{this.renderNumberButton(0)}
-   		  	{this.renderNumberButton('.')}
-   		  	{this.renderActionButton('=')}
+   		  	{this.renderNumberButton('+/-','grey')}
+   		  	{this.renderNumberButton(0,'grey')}
+   		  	{this.renderNumberButton('.','grey')}
+   		  	{this.renderActionButton('=','grey')}
    		  </div>
    		);
   }

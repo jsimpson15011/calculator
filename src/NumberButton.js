@@ -4,7 +4,7 @@ class NumberButton extends Component {
   render() {
     return (
      <div>
-     <button className='calcButton' onClick=
+     <button className={'calcButton '+this.props.color} onClick=
 		{() =>{this.props.updateDisplay(this.props.value)}}>
       {this.props.value}
      </button>
