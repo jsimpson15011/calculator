@@ -9,6 +9,7 @@ class App extends Component {
     this.state={
     	displayedValue: '0',
     	storedValue: undefined,
+      storedValueForRepeatedFunction:undefined,
     	dotPressed: false,
       displayEditable: true,
     	operatorActive: false,
@@ -20,16 +21,91 @@ class App extends Component {
   	}
   	actionButton(valueOfButton){
       var calcNums= (activeOperatorButton) =>{
-        var displayedValue= this.state.displayedValue
-        var storedValue= this.state.storedValue
+        var displayedValue= Number(this.state.displayedValue)
+        var storedValue= Number(this.state.storedValue)
+        var storedValueForRepeatedFunction= Number(this.state.storedValueForRepeatedFunction)
         switch(activeOperatorButton){
           case '÷':
-          displayedValue= storedValue/displayedValue
-          this.setState({
-            displayedValue: displayedValue,
-            repeatOperator: '÷',
-            displayEditable: false
-          })
+            if (this.state.repeatOperator==='÷') {
+              displayedValue= displayedValue/storedValueForRepeatedFunction
+              this.setState({
+                storedValue: displayedValue,
+                displayedValue: displayedValue,
+                displayEditable: false
+              })
+              break
+            }
+            displayedValue= storedValue/displayedValue
+            this.setState({
+              storedValueForRepeatedFunction:this.state.displayedValue,
+              storedValue: displayedValue,
+              displayedValue: displayedValue,
+              repeatOperator: '÷',
+              displayEditable: false
+            })
+          break;
+
+          case 'X':
+            if (this.state.repeatOperator==='X') {
+              displayedValue= displayedValue*storedValueForRepeatedFunction
+              this.setState({
+                storedValue: displayedValue,
+                displayedValue: displayedValue,
+                displayEditable: false
+              })
+              break
+            }
+            displayedValue= storedValue*displayedValue
+            this.setState({
+              storedValueForRepeatedFunction:this.state.displayedValue,
+              storedValue: displayedValue,
+              displayedValue: displayedValue,
+              repeatOperator: 'X',
+              displayEditable: false
+            })
+          break;
+
+          case '+':
+            if (this.state.repeatOperator==='+') {
+              displayedValue= displayedValue+storedValueForRepeatedFunction
+              this.setState({
+                storedValue: displayedValue,
+                displayedValue: displayedValue,
+                displayEditable: false
+              })
+              break
+            }
+            displayedValue= storedValue+displayedValue
+            this.setState({
+              storedValueForRepeatedFunction:this.state.displayedValue,
+              storedValue: displayedValue,
+              displayedValue: displayedValue,
+              repeatOperator: '+',
+              displayEditable: false
+            })
+          break;
+
+          case '-':
+            if (this.state.repeatOperator==='-') {
+              displayedValue= displayedValue-storedValueForRepeatedFunction
+              this.setState({
+                storedValue: displayedValue,
+                displayedValue: displayedValue,
+                displayEditable: false
+              })
+              break
+            }
+            displayedValue= storedValue-displayedValue
+            this.setState({
+              storedValueForRepeatedFunction:this.state.displayedValue,
+              storedValue: displayedValue,
+              displayedValue: displayedValue,
+              repeatOperator: '-',
+              displayEditable: false
+            })
+          break;
+
+          default:
           break;
           }
         }
@@ -97,9 +173,72 @@ class App extends Component {
         }
         break;
 
+        case 'X':
+        if (this.state.repeatOperator==='X') {
+          console.log('you pressed the same button twice')
+        }
+        if (this.state.operatorActive===false) {
+          this.setState({
+            operatorActive:true,
+            activeOperatorButton:'X',
+            storedValue:this.state.displayedValue
+          })
+        }
+        if (this.state.storedValue) {
+          calcNums(this.state.activeOperatorButton)
+          this.setState({
+            activeOperatorButton:'X'
+          })
+        }
+        break;
+
+        case '+':
+        if (this.state.repeatOperator==='+') {
+          console.log('you pressed the same button twice')
+        }
+        if (this.state.operatorActive===false) {
+          this.setState({
+            operatorActive:true,
+            activeOperatorButton:'+',
+            storedValue:this.state.displayedValue
+          })
+        }
+        if (this.state.storedValue) {
+          calcNums(this.state.activeOperatorButton)
+          this.setState({
+            activeOperatorButton:'+'
+          })
+        }
+        break;
+
+        case '-':
+        if (this.state.operatorActive===false) {
+          this.setState({
+            operatorActive:true,
+            activeOperatorButton:'-',
+            storedValue:this.state.displayedValue
+          })
+        }
+        if (this.state.storedValue) {
+          calcNums(this.state.activeOperatorButton)
+          this.setState({
+            activeOperatorButton:'-'
+          })
+        }
+        break;
+        case '=':
+        this.setState({
+          operatorActive: false,
+          activeOperatorButton:undefined,
+          repeatOperator:undefined
+        })
+        calcNums(this.state.activeOperatorButton)
+        break
+
+
 
   			default:
-  			return;
+  			break;
   		}
   	}
   	updateDisplay(valueOfButton){
