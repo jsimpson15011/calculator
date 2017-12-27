@@ -10,18 +10,38 @@ class App extends Component {
     	displayedValue: '0',
     	storedValue: undefined,
     	dotPressed: false,
-    	operatorActive: false
+      displayEditable: true,
+    	operatorActive: false,
+      activeOperatorButton:undefined,
+      repeatOperator:undefined
     	}
     this.updateDisplay = this.updateDisplay.bind(this)
     this.actionButton = this.actionButton.bind(this)
   	}
   	actionButton(valueOfButton){
+      var calcNums= (activeOperatorButton) =>{
+        var displayedValue= this.state.displayedValue
+        var storedValue= this.state.storedValue
+        switch(activeOperatorButton){
+          case '÷':
+          displayedValue= storedValue/displayedValue
+          this.setState({
+            displayedValue: displayedValue,
+            repeatOperator: '÷',
+            displayEditable: false
+          })
+          break;
+          }
+        }
   		switch(valueOfButton){
   			case 'CE':
   			this.setState({
   				storedValue: undefined,
   				displayedValue: '0',
-  				dotPressed: false
+  				dotPressed: false,
+          operatorActive: false,
+          repeatOperator: undefined,
+          activeOperatorButton: undefined
   			})
   			break;
 
@@ -33,8 +53,15 @@ class App extends Component {
   			break;
 
   			case '<=':
-  			var lastDigitInDisplay= this.state.displayedValue.slice(-1)
-  			var lengthOfDisplay= this.state.displayedValue.replace('-','').length
+  			var lastDigitInDisplay
+  			var lengthOfDisplay
+        if (this.state.displayEditable) {
+          lastDigitInDisplay= this.state.displayedValue.slice(-1)
+          lengthOfDisplay= this.state.displayedValue.replace('-','').length
+        }
+        if (!this.state.displayEditable) {
+          return
+        }
   			if (lengthOfDisplay===1) {
   				this.setState({
   					displayedValue: '0'
@@ -51,12 +78,35 @@ class App extends Component {
   			}
   			break;
   			
+        case '÷':
+        if (this.state.repeatOperator==='÷') {
+          console.log('you pressed the same button twice')
+        }
+        if (this.state.operatorActive===false) {
+          this.setState({
+            operatorActive:true,
+            activeOperatorButton:'÷',
+            storedValue:this.state.displayedValue
+          })
+        }
+        if (this.state.storedValue) {
+          calcNums(this.state.activeOperatorButton)
+          this.setState({
+            activeOperatorButton:'÷'
+          })
+        }
+        break;
+
+
   			default:
   			return;
   		}
   	}
   	updateDisplay(valueOfButton){
   		if (valueOfButton==='+/-') {
+        if (this.state.operatorActive) {
+          return
+        }
   			if (this.state.displayedValue.toString().includes('-')) {
   				this.setState({
   					displayedValue: this.state.displayedValue.replace('-','')
@@ -78,8 +128,15 @@ class App extends Component {
   				return
   			}
   			this.setState({
-  				dotPressed: true
+  				dotPressed: true,
+          repeatOperator: undefined,
+          displayEditable: true
   			})
+        if (this.state.operatorActive===true) {
+          this.setState({
+            displayedValue: '0.'
+          })
+        }
   			if (this.state.displayedValue==='0') {
   				this.setState({
   					displayedValue: '0.'
@@ -93,21 +150,29 @@ class App extends Component {
   			}
   		}
   		if (!this.state.operatorActive) {
-  		if (this.state.displayedValue.length<16) {
-  			if (this.state.displayedValue==='0') {
-  				if (this.state.displayedValue==='0') {
-  					this.setState({
-  					displayedValue: valueOfButton.toString()
-  					})
-  				}
-  			}
-  			else{
-  				this.setState({
-  				displayedValue: this.state.displayedValue+valueOfButton.toString()
-  				})
-  			}
+  		  if (this.state.displayedValue.length<16) {
+  		  	if (this.state.displayedValue==='0') {
+  		  		if (this.state.displayedValue==='0') {
+  		  			this.setState({
+  		  			displayedValue: valueOfButton.toString()
+  		  			})
+  		  		}
+  		  	}
+  		  	else{
+  		  		this.setState({
+  		  		displayedValue: this.state.displayedValue+valueOfButton.toString()
+  		  		})
+  		  	}
+  		  }
   		}
-  		}
+      if (this.state.operatorActive) {
+        this.setState({
+          operatorActive: false,
+          repeatOperator: undefined,
+          displayedValue: valueOfButton.toString(),
+          displayEditable: true
+          })
+      }
   	}
 
 	renderNumberButton(valueOfButton,color){
