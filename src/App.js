@@ -117,7 +117,8 @@ class App extends Component {
   				dotPressed: false,
           operatorActive: false,
           repeatOperator: undefined,
-          activeOperatorButton: undefined
+          activeOperatorButton: undefined,
+          displayEditable: true
   			})
   			break;
 
