@@ -124,6 +124,13 @@ class App extends Component {
   			}
   		}
   		if (valueOfButton==='.') {
+        if(this.state.operatorActive===true){
+          this.setState({
+            displayedValue: '0.',
+            operatorActive: false,
+            dotPressed: true
+          })
+        }
   			if (this.state.dotPressed) {
   				return
   			}
@@ -132,17 +139,14 @@ class App extends Component {
           repeatOperator: undefined,
           displayEditable: true
   			})
-        if (this.state.operatorActive===true) {
+        if (this.state.displayedValue==='0') {
           this.setState({
-            displayedValue: '0.'
+            displayedValue: '0.',
+            operatorActive: false,
+            dotPressed: true
           })
+          return
         }
-  			if (this.state.displayedValue==='0') {
-  				this.setState({
-  					displayedValue: '0.'
-  				})
-  				return
-  			}
   			else{
   				this.setState({
   					displayedValue: this.state.displayedValue+valueOfButton.toString()
@@ -165,12 +169,13 @@ class App extends Component {
   		  	}
   		  }
   		}
-      if (this.state.operatorActive) {
+      if (this.state.operatorActive&&valueOfButton!=='.') {
         this.setState({
           operatorActive: false,
           repeatOperator: undefined,
           displayedValue: valueOfButton.toString(),
-          displayEditable: true
+          displayEditable: true,
+          dotPressed: false
           })
       }
   	}
