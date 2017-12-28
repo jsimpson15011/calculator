@@ -135,9 +135,10 @@
 .display{
   line-height: 50px;
   font-size: calc(10px+1vw);
-  background-color: white;
-  width: 100%;
+  color: #5cbf2a;
+  background-color: #1e232b;
+  width: calc(100%-5px);
   height: 100px;
-  border: black solid 2px;
+  border: grey solid 5px;
 }
 
